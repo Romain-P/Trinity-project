@@ -1,0 +1,31 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = 1.8
+
+    /** final dependencies releases **/
+    ext.lombok = '1.14.0'
+    ext.guice = '3.0'
+    ext.guicem = '3.0'
+    ext.config = '1.0.2'
+    ext.bukkit = '1.6.4-R2.0'
+    /** end **/
+
+    configurations { provided }
+    configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
+
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.bukkit.org/content/groups/public/" }
+    }
+
+    dependencies {
+        provided "org.projectlombok:lombok:$lombok"
+    }
+
+    sourceSets {
+        main { compileClasspath += configurations.provided }
+    }
+
+    idea { module { scopes.PROVIDED.plus += configurations.provided } }
+}

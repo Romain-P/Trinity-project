@@ -1,0 +1,4 @@
+rootProject.name = 'Trinity-project'
+include 'trinity-core'
+include 'plugins'
+
