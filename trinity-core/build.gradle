@@ -2,4 +2,6 @@ dependencies {
     provided "org.bukkit:bukkit:$bukkit"
     compile "com.google.inject:guice:$guice"
     compile "com.google.inject.extensions:guice-multibindings:$guicem"
+    compile project(':trinity-api')
+    compile project(':trinity-commons')
 }

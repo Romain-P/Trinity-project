@@ -1,0 +1,4 @@
+dependencies {
+    provided "com.google.inject:guice:$guice"
+    provided "com.google.inject.extensions:guice-multibindings:$guicem"
+}
