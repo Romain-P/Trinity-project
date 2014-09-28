@@ -21,6 +21,8 @@ allprojects {
 
     dependencies {
         provided "org.projectlombok:lombok:$lombok"
+        compile "org.slf4j:slf4j-api:$slf4j"
+        compile "ch.qos.logback:logback-classic:$logback"
     }
 
     sourceSets {
