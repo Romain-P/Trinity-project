@@ -12,7 +12,7 @@ import org.trinitycore.database.example.ExampleManager;
 public class DatabaseModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(DatabaseService.class).to(LoginDatabaseService.class).asEagerSingleton();
+        bind(DatabaseService.class).to(TrinityDatabaseService.class).asEagerSingleton();
         Multibinder<DaoQueryManager> managers = Multibinder.newSetBinder(binder(), DaoQueryManager.class);
         managers.addBinding().to(ExampleManager.class);
     }
