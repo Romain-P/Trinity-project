@@ -9,6 +9,8 @@ allprojects {
     ext.guicem = '3.0'
     ext.config = '1.0.2'
     ext.bukkit = '1.6.4-R2.0'
+    ext.slf4j = '1.7.7'
+    ext.logback = '1.1.2'
     /** end **/
 
     configurations { provided }
