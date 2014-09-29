@@ -2,6 +2,7 @@ package org.trinity.api.database;
 
 /**
  * Created by Return on 03/09/2014.
+ * Data Access Object
  */
 public interface DAO<T> {
     boolean create(T obj);
