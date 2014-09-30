@@ -16,5 +16,6 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(JavaPlugin.class).toInstance(plugin);
+        bind(TrinityHook.class).asEagerSingleton();
     }
 }

@@ -51,8 +51,6 @@ public class TrinityDatabaseService implements DatabaseService {
         if (!connection.isValid(1000)) return null;
         connection.setAutoCommit(true);
 
-        queryManagers.get(DAO.class);
-
         /** static data **/
         for(DlaoQueryManager manager: lManagers) {
             loadManagers.put(manager.getClass(), manager);
