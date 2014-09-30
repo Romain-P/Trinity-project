@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.trinity.api.database.DAO;
 import org.trinity.api.database.DaoQueryManager;
 import org.trinity.api.database.DatabaseService;
+import org.trinity.api.database.DlaoQueryManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,11 +26,15 @@ public class TrinityDatabaseService implements DatabaseService {
     private Connection connection;
     @Getter
     private Map<Class, DaoQueryManager> queryManagers;
+    @Getter
+    private Map<Class, DlaoQueryManager> loadManagers;
 
     @Inject
     Config config;
     @Inject
     Set<DaoQueryManager> managers;
+    @Inject
+    Set<DlaoQueryManager> lManagers;
 
     public TrinityDatabaseService() {
         this.locker = new ReentrantLock();
@@ -48,8 +53,16 @@ public class TrinityDatabaseService implements DatabaseService {
 
         queryManagers.get(DAO.class);
 
+        /** static data **/
+        for(DlaoQueryManager manager: lManagers) {
+            loadManagers.put(manager.getClass(), manager);
+            manager.loadAll();
+        }
+
+        /** dynamic data **/
         for(DaoQueryManager manager: managers)
             queryManagers.put(manager.getClass(), manager);
+
         return this;
     }
 
