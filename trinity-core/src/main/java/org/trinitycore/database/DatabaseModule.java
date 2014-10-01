@@ -5,7 +5,7 @@ import com.google.inject.multibindings.Multibinder;
 import org.trinity.api.database.DaoQueryManager;
 import org.trinity.api.database.DatabaseService;
 import org.trinity.api.database.DlaoQueryManager;
-import org.trinitycore.database.example.ExampleManager;
+import org.trinitycore.database.managers.LevelManager;
 
 /**
  * Created by Return on 03/09/2014.
@@ -15,7 +15,7 @@ public class DatabaseModule extends AbstractModule {
     protected void configure() {
         bind(DatabaseService.class).to(TrinityDatabaseService.class).asEagerSingleton();
         Multibinder<DaoQueryManager> daoManagers = Multibinder.newSetBinder(binder(), DaoQueryManager.class);
-        daoManagers.addBinding().to(ExampleManager.class);
+        daoManagers.addBinding().to(LevelManager.class);
 
         Multibinder<DlaoQueryManager> dlaoManagers = Multibinder.newSetBinder(binder(), DlaoQueryManager.class);
 

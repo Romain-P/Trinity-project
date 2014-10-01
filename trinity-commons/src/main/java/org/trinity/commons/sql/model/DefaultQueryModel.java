@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Return on 03/09/2014.
  */
-public abstract class DefaultQueryModel<T> implements QueryModel<T> {
+public class DefaultQueryModel<T> implements QueryModel<T> {
     @Getter
     private final String tableName;
     @Getter
@@ -29,18 +29,28 @@ public abstract class DefaultQueryModel<T> implements QueryModel<T> {
         this.columns = new HashMap<>();
     }
 
+    public Map<String, String> getColumnModel() {
+        return new HashMap<>();
+    }
+
     public QueryModel<T> schematize() {
+        boolean defaultModel = getColumnModel().isEmpty();
+
         for(Field field: schema.getClass().getDeclaredFields()) {
             boolean primary = false;
 
             if(field.isAnnotationPresent(PrimaryQueryField.class)) {
-                primaryKeyName = field.getName();
+                String name = field.getName();
+                primaryKeyName = name;
+                if(defaultModel) getColumnModel().put(name, name);
                 primary = true;
             }
 
             if(field.isAnnotationPresent(QueryField.class) || primary) {
                 String fieldName = field.getName();
-                columns.put(fieldName, new DefaultQueryColumn(fieldName, getColumnModel().get(fieldName), field.getType()));
+                if(defaultModel) getColumnModel().put(fieldName, fieldName);
+
+                columns.put(fieldName, new DefaultQueryColumn(fieldName, defaultModel ? fieldName: getColumnModel().get(fieldName), field.getType()));
             }
         }
         return this;

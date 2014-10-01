@@ -105,6 +105,12 @@ public interface PreparedStatementBuilder {
         return statement;
     }
 
+    public static PreparedStatement newLoadQuery(QueryModel model, Connection connection) throws SQLException {
+        String query = "SELECT * FROM "+model.getTableName()+";";
+        PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        return statement;
+    }
+
     public static PreparedStatement newDeleteQuery(QueryModel model, Object primaryKey, Connection connection) throws SQLException {
         String query = "DELETE FROM "+model.getTableName() +
                 " WHERE "+model.getPrimaryKeyName()+" = ?;";
