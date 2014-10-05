@@ -11,6 +11,7 @@ allprojects {
     ext.bukkit = '1.6.4-R2.0'
     ext.slf4j = '1.7.7'
     ext.logback = '1.1.2'
+    ext.mysql = '5.1.6'
     /** end **/
 
     configurations { provided }
@@ -23,8 +24,10 @@ allprojects {
 
     dependencies {
         provided "org.projectlombok:lombok:$lombok"
+        /** Prefering Javaplugin.getLogger()
         compile "org.slf4j:slf4j-api:$slf4j"
         compile "ch.qos.logback:logback-classic:$logback"
+        **/
     }
 
     sourceSets {

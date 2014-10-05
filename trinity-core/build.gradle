@@ -1,8 +1,11 @@
+apply plugin: 'application'
+mainClassName = "org.trinitycore.core.Main"
 dependencies {
-    provided "org.bukkit:bukkit:$bukkit"
+    compile "org.bukkit:bukkit:$bukkit"
     compile "com.google.inject:guice:$guice"
     compile "com.google.inject.extensions:guice-multibindings:$guicem"
     compile "com.typesafe:config:$config"
+    compile "mysql:mysql-connector-java:$mysql"
     compile project(':trinity-api')
     compile project(':trinity-commons')
 }
