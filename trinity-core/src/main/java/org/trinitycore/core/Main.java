@@ -3,9 +3,11 @@ package org.trinitycore.core;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.trinity.api.database.DatabaseService;
 import org.trinitycore.database.DatabaseModule;
+import org.trinitycore.hooks.HookModule;
 
 import java.sql.SQLException;
 
