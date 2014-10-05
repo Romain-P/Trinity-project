@@ -15,9 +15,8 @@ public class DatabaseModule extends AbstractModule {
     protected void configure() {
         bind(DatabaseService.class).to(TrinityDatabaseService.class).asEagerSingleton();
         Multibinder<DaoQueryManager> daoManagers = Multibinder.newSetBinder(binder(), DaoQueryManager.class);
-        daoManagers.addBinding().to(LevelManager.class);
-
+        //soon..
         Multibinder<DlaoQueryManager> dlaoManagers = Multibinder.newSetBinder(binder(), DlaoQueryManager.class);
-
+        dlaoManagers.addBinding().to(LevelManager.class);
     }
 }

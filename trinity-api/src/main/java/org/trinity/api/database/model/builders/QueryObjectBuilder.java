@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Return on 06/09/2014.
  */
-public interface QueryObjectBuilder {
+public class QueryObjectBuilder {
     public static Query newQuery(QueryModel<?> model, ResultSet result) throws SQLException {
         Query query = model.createNewQuery();
 

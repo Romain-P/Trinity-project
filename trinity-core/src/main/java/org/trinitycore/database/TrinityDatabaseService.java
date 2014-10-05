@@ -3,10 +3,12 @@ package org.trinitycore.database;
 import com.google.inject.Inject;
 import com.typesafe.config.Config;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.trinity.api.database.DAO;
 import org.trinity.api.database.DaoQueryManager;
 import org.trinity.api.database.DatabaseService;
 import org.trinity.api.database.DlaoQueryManager;
+import org.trinitycore.hooks.LevelHook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Logger;
 
 /**
  * Created by Return on 03/09/2014.
@@ -35,10 +38,13 @@ public class TrinityDatabaseService implements DatabaseService {
     Set<DaoQueryManager> managers;
     @Inject
     Set<DlaoQueryManager> lManagers;
+    @Inject
+    LevelHook hook;
 
     public TrinityDatabaseService() {
         this.locker = new ReentrantLock();
         this.queryManagers = new HashMap<>();
+        this.loadManagers = new HashMap<>();
     }
 
     public TrinityDatabaseService start() throws SQLException {
@@ -50,7 +56,6 @@ public class TrinityDatabaseService implements DatabaseService {
         );
         if (!connection.isValid(1000)) return null;
         connection.setAutoCommit(true);
-
         /** static data **/
         for(DlaoQueryManager manager: lManagers) {
             loadManagers.put(manager.getClass(), manager);

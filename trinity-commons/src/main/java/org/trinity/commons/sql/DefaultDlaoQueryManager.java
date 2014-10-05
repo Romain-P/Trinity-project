@@ -44,7 +44,7 @@ public abstract class DefaultDlaoQueryManager extends DlaoQueryManager {
         } finally {
             database.getConnection().setAutoCommit(true);
             database.getLocker().unlock();
-            return queries.toArray(new Query[] {});
         }
+        return queries.toArray(new Query[] {});
     }
 }
