@@ -6,6 +6,7 @@ import org.trinity.api.database.model.Query;
 import org.trinity.commons.sql.DefaultDlaoQueryManager;
 import org.trinity.commons.sql.model.DefaultQueryModel;
 import org.trinitycore.hooks.LevelHook;
+import org.trinitycore.hooks.TrinityHook;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -14,20 +15,20 @@ import java.util.TreeMap;
 /**
  * Created by Return on 03/09/2014.
  */
-@Slf4j
 public class LevelManager extends DefaultDlaoQueryManager {
     @Inject
     LevelHook hook;
+    @Inject
+    TrinityHook trinity;
 
     public LevelManager() {
-        super(new DefaultQueryModel<>("experience", new LevelHook.Level()).schematize());
+        super(new DefaultQueryModel<>("levels", new LevelHook.Level()).schematize());
     }
 
     @Override
     public void loadAll() {
         try {
             Query[] queries = createNewQueries();
-
             /** level -> stepExp **/
             Map<Integer, Long> levels = new TreeMap<>();
 
@@ -44,11 +45,10 @@ public class LevelManager extends DefaultDlaoQueryManager {
                 if(level != 1 && experience == 0)
                     for(int i = 1; i<level; i++)
                         experience += levels.get(i);
-
                 hook.addNewLevel(new LevelHook.Level(level, experience, stepExperience));
             }
         } catch (SQLException exception) {
-            log.error(exception.getMessage());
+            trinity.getLogger().warning(exception.getMessage());
         }
     }
 }
