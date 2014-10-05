@@ -1,4 +1,4 @@
-package org.trinitycore.hooks;
+package org.trinitycore.backend.hooks;
 
 import com.google.inject.Inject;
 import lombok.Getter;

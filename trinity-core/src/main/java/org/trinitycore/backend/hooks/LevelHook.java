@@ -1,4 +1,4 @@
-package org.trinitycore.hooks;
+package org.trinitycore.backend.hooks;
 
 import lombok.Getter;
 import org.trinity.api.database.model.annotations.PrimaryQueryField;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class LevelHook {
     /** level -> experience **/
     @Getter
-    private final Map<Integer, Level> levels;
+    private final Map<Long, Level> levels;
 
     public LevelHook() {
         this.levels = new HashMap<>();
@@ -23,11 +23,12 @@ public class LevelHook {
         levels.put(level.getLevel(), level);
     }
 
-    public long getExperienceNeededTo(int level) {
-        return levels.get(level).getExperience();
+    public long getExperienceNeededTo(long level) {
+        Level key = levels.get(level);
+        return key != null ? key.getExperience() : -1;
     }
 
-    public long getStepExperienceAt(int level) {
+    public long getStepExperienceAt(long level) {
         return levels.get(level).getStepExperience();
     }
 
@@ -38,7 +39,7 @@ public class LevelHook {
     public static class Level {
         @Getter
         @PrimaryQueryField
-        private final int level;
+        private final long level;
         @Getter
         @QueryField
         private final long experience;
