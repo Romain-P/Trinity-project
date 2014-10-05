@@ -1,0 +1,5 @@
+name: Trinity
+version: 1.0.0
+description: Trinity plugin
+author: Romain-p
+main: org.trinitycore.core.Main
