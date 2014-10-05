@@ -20,7 +20,7 @@ public class Main extends JavaPlugin {
 
     public void onEnable() {
         getLogger().info("initializing guice injector..");
-        Guice.createInjector(new MainModule(this), new DatabaseModule());
+        Guice.createInjector(new MainModule(this), new DatabaseModule(), new HookModule());
 
         getLogger().info("initializing database..");
         try {
