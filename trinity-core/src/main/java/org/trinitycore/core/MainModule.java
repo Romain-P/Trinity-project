@@ -26,9 +26,9 @@ public class MainModule extends AbstractModule {
     
     @Override
     protected void configure() {
-        Config config = ConfigFactory.parseFile(new File("config.conf"));
+        Config config = ConfigFactory.parseFile(new File("trinity.conf"));
         if(config.isEmpty()) {
-            trinity.getLogger().warning("Failed to load config.conf");
+            trinity.getLogger().warning("Failed to load trinity.conf");
             System.exit(1);
         }
         bind(Config.class).toInstance(config);
