@@ -1,6 +1,8 @@
 package org.trinitycore.hooks;
 
 import lombok.Getter;
+import org.trinity.api.database.model.annotations.PrimaryQueryField;
+import org.trinity.api.database.model.annotations.QueryField;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,9 +37,13 @@ public class LevelHook {
 
     public static class Level {
         @Getter
+        @PrimaryQueryField
         private final int level;
         @Getter
-        private final long experience, stepExperience;
+        @QueryField
+        private final long experience;
+        @Getter
+        private final long stepExperience;
 
         public Level() {
             this(-1,-1,-1);
