@@ -1,12 +1,11 @@
 package org.trinitycore.database.managers;
 
 import com.google.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
 import org.trinity.api.database.model.Query;
 import org.trinity.commons.sql.DefaultDlaoQueryManager;
 import org.trinity.commons.sql.model.DefaultQueryModel;
-import org.trinitycore.hooks.LevelHook;
-import org.trinitycore.hooks.TrinityHook;
+import org.trinitycore.backend.hooks.LevelHook;
+import org.trinitycore.backend.hooks.TrinityHook;
 
 import java.sql.SQLException;
 import java.util.Map;
