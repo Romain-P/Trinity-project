@@ -7,6 +7,7 @@ import org.trinity.api.database.DaoQueryManager;
 import org.trinity.api.database.DatabaseService;
 import org.trinity.api.database.DlaoQueryManager;
 import org.trinitycore.backend.hooks.LevelHook;
+import org.trinitycore.backend.hooks.TrinityHook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +26,7 @@ public class TrinityDatabaseService implements DatabaseService {
     @Getter
     private Connection connection;
     @Getter
-    private Map<Class, DaoQueryManager> queryManagers;
+    private Map<Class, DaoQueryManager<?>> queryManagers;
     @Getter
     private Map<Class, DlaoQueryManager> loadManagers;
 
@@ -36,7 +37,7 @@ public class TrinityDatabaseService implements DatabaseService {
     @Inject
     Set<DlaoQueryManager> lManagers;
     @Inject
-    LevelHook hook;
+    TrinityHook trinity;
 
     public TrinityDatabaseService() {
         this.locker = new ReentrantLock();
@@ -53,13 +54,14 @@ public class TrinityDatabaseService implements DatabaseService {
         );
         if (!connection.isValid(1000)) return null;
         connection.setAutoCommit(true);
-        /** static data **/
+
+        trinity.getLogger().info("loading static data..");
         for(DlaoQueryManager manager: lManagers) {
             loadManagers.put(manager.getClass(), manager);
             manager.loadAll();
         }
+        trinity.getLogger().info("static data loaded!");
 
-        /** dynamic data **/
         for(DaoQueryManager manager: managers)
             queryManagers.put(manager.getClass(), manager);
 
