@@ -15,7 +15,7 @@ import org.trinitycore.frontend.listeners.client.ClientLogListener;
 /**
  * Managed by romain on 07/10/2014.
  */
-public class ClientController extends PullableController{
+public class ClientController extends PullableController {
     @Getter
     private final ImmutableList<ImprovedListener> listeners;
 

@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.trinity.api.bukkit.ImprovedListener;
 import org.trinity.api.controllers.Controller;
+import org.trinity.api.controllers.PullableController;
 import org.trinity.api.database.DaoQueryManager;
 import org.trinitycore.backend.hooks.TrinityHook;
 import org.trinitycore.frontend.entities.Client;
@@ -22,7 +23,7 @@ public class ClientLogListener extends ImprovedListener {
     @Inject
     TrinityHook trinity;
     @Inject
-    Set<Controller> controllers;
+    Set<PullableController> controllers;
 
     public ClientLogListener() {
         this.manager = trinity.getClientManager();
@@ -45,7 +46,7 @@ public class ClientLogListener extends ImprovedListener {
         Player player = get(event);
         Client client = trinity.getClients().get(player);
 
-        for(Controller controller: controllers)
+        for(PullableController controller: controllers)
             controller.pullPlayer(player);
 
         client.save();
