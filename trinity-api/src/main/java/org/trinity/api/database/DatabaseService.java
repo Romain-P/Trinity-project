@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public interface DatabaseService {
     public Connection getConnection();
     public ReentrantLock getLocker();
-    public Map<Class, DaoQueryManager> getQueryManagers();
+    public Map<Class, DaoQueryManager<?>> getQueryManagers();
     public Map<Class, DlaoQueryManager> getLoadManagers();
 
     public DatabaseService start() throws SQLException;
