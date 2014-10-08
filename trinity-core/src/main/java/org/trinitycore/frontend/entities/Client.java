@@ -2,10 +2,14 @@ package org.trinitycore.frontend.entities;
 
 import com.google.inject.Inject;
 import lombok.Getter;
+import org.bukkit.entity.Player;
+import org.trinity.api.database.DaoQueryManager;
 import org.trinity.api.database.model.annotations.PrimaryQueryField;
 import org.trinity.api.database.model.annotations.QueryField;
-import org.trinitycore.database.managers.ClientManager;
 import org.trinitycore.backend.hooks.LevelHook;
+import org.trinitycore.backend.hooks.TrinityHook;
+import org.trinitycore.database.TrinityDatabaseService;
+import org.trinitycore.database.managers.ClientManager;
 
 /**
  * Managed by romain on 30/09/2014.
@@ -22,11 +26,16 @@ public class Client {
     private int pvmDeaths, pvmWins, pvpDeaths, pvpWins;
     @QueryField
     private double pvmRatio, pvpRatio;
+    @Getter
+    private Player player;
+    private DaoQueryManager<Client> manager;
 
     @Inject
     LevelHook hook;
     @Inject
-    ClientManager manager;
+    TrinityDatabaseService database;
+    @Inject
+    TrinityHook trinity;
 
     public Client() {this(null);}
 
@@ -44,6 +53,8 @@ public class Client {
         this.pvmWins = pvmWins;
         this.pvpDeaths = pvpDeaths;
         this.pvpWins = pvpWins;
+
+        manager = (DaoQueryManager<Client>) database.getQueryManagers().get(ClientManager.class);
     }
 
     public void setLevel(long level) {
@@ -94,11 +105,15 @@ public class Client {
     }
 
     public double getPvmRatio() {
-        return (pvmRatio = Math.floor((pvmWins/pvmDeaths) * 100) / 100);
+        return (pvmRatio = Math.floor((pvmWins/pvmDeaths) * 100)) / 100;
     }
 
     public double getPvpRatio() {
-        return (pvpRatio = Math.floor((pvpWins/pvpDeaths) * 100) / 100);
+        return (pvpRatio = Math.floor((pvpWins/pvpDeaths) * 100)) / 100;
+    }
+
+    public Player getPlayer() {
+        return player != null ? player : (player = trinity.getServer().getPlayer(name));
     }
 
     public void save() {
